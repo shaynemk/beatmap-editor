@@ -8,3 +8,4 @@ Utility for editing beatmaps in bulk.
 -Display help menu unknown input.<br>
 -Low: Remember previous option values.<br>
 -Other things it needs to do, duh.<br>
+-Persistent settings file for common options?

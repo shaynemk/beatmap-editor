@@ -10,7 +10,8 @@ public class CLI {
     }
 
     public static String printHelp() {
-        // TODO: 5/30/16 Build up the help menu. 
+        // TODO: 5/30/16 Build up the help menu.
+
         return "";
     }
 }

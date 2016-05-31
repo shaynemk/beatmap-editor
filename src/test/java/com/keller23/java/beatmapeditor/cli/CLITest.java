@@ -9,7 +9,7 @@ public class CLITest {
     public void printHeader() throws Exception {
         //Verify Header is properly returned as String.
 
-        String expect = "Beatmap Editor\nWork in Progress";
+        String expect = "-- Beatmap Editor -- (WIP Header)";
         String actual = CLI.printHeader();
 
         assertSame(expect,actual);

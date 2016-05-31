@@ -1,14 +1,24 @@
-group 'beatmap-editor'
-version '1.0'
-
 apply plugin: 'java'
+//sourceCompatibility = 1.5
 
-sourceCompatibility = 1.5
+group 'beatmap-editor'
+
+//version '1.0'
+def jenkinsBuild = System.getenv("BUILD_NUMBER") as String ?: "IDE"
+version = "0.1" + "-" + jenkinsBuild
 
 repositories {
     mavenCentral()
 }
 
+//TODO Figure out why this whines in IntelliJ, when it works for building the MANIFEST through gradle.
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.keller23.java.beatmapeditor.Main'
+    }
+}
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
+    //compile "commons-io:commons-io:1.3.2"
 }

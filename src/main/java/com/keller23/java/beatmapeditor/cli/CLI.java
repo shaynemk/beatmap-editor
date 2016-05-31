@@ -6,7 +6,7 @@ public class CLI {
 
     public static String printHeader() {
         // TODO: 5/30/16 Finish the header. Integrate version?
-        return Strings.APP_NAME + "\n Work in Progress"; //+ ", v" + Strings.APP_VERSION;
+        return Strings.APP_NAME + "\nWork in Progress"; //+ ", v" + Strings.APP_VERSION;
     }
 
     public static String printHelp() {

@@ -9,7 +9,7 @@ import java.util.List;
 
 
 public class Files {
-    public static void test() throws IOException {
+    public static void listFilesInDir() throws IOException {
         File dir = new File(".");
 
         System.out.println("Getting all files in " + dir.getCanonicalPath() + " including those in subdirectories");

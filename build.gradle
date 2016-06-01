@@ -17,6 +17,7 @@ jar {
         attributes 'Main-Class': 'com.keller23.java.beatmapeditor.Main'
     }
 
+    // this little gem adds the files from the CommonsIO lib to the jar on build.
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }

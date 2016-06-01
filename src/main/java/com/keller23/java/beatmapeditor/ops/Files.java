@@ -9,8 +9,19 @@ import java.util.List;
 
 
 public class Files {
+
     public static void listFilesInDir() throws IOException {
         File dir = new File(".");
+
+        System.out.println("Getting all files in " + dir.getCanonicalPath() + " including those in subdirectories");
+        List<File> files = (List<File>) FileUtils.listFiles(dir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+        for (File file : files) {
+            System.out.println("file: " + file.getCanonicalPath());
+        }
+    }
+
+    public static void listFilesInDir(String argDIR) throws IOException {
+        File dir = new File(argDIR);
 
         System.out.println("Getting all files in " + dir.getCanonicalPath() + " including those in subdirectories");
         List<File> files = (List<File>) FileUtils.listFiles(dir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);

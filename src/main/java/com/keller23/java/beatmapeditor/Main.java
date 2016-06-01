@@ -26,7 +26,7 @@ public class Main {
         } else if (args.length > 0) {
             if(args[0].equals("filesTest")) {
                 try {
-                    Files.test();
+                    Files.listFilesInDir();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

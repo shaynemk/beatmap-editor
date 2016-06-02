@@ -17,6 +17,7 @@ public class Files {
         List<File> files = (List<File>) FileUtils.listFiles(dir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
         for (File file : files) {
             System.out.println("file: " + file.getCanonicalPath());
+            //file.
         }
     }
 
@@ -25,6 +26,20 @@ public class Files {
 
         System.out.println("Getting all files in " + dir.getCanonicalPath() + " including those in subdirectories");
         List<File> files = (List<File>) FileUtils.listFiles(dir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
+        for (File file : files) {
+            System.out.println("file: " + file.getCanonicalPath());
+        }
+    }
+
+    public static void getExtFilesInDir(String[] extensions) throws IOException {
+        File dir = new File(".");
+        //String[] OSU = new String[] {"osu"};
+        System.out.print("Getting all {");
+        for (String ext : extensions) {
+            System.out.print(ext + ", ");
+        }
+        System.out.println("} files in " + dir.getCanonicalPath());
+        List<File> files = (List<File>) FileUtils.listFiles(dir, extensions, true);
         for (File file : files) {
             System.out.println("file: " + file.getCanonicalPath());
         }

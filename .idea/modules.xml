@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.keller23.java.beatmapeditor.iml" filepath="$PROJECT_DIR$/.idea/modules/com.keller23.java.beatmapeditor.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.keller23.java.beatmapeditor_main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.keller23.java.beatmapeditor_main.iml" group="com.keller23.java.beatmapeditor" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.keller23.java.beatmapeditor_test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.keller23.java.beatmapeditor_test.iml" group="com.keller23.java.beatmapeditor" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/beatmapeditor.iml" filepath="$PROJECT_DIR$/.idea/modules/beatmapeditor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/beatmapeditor_main.iml" filepath="$PROJECT_DIR$/.idea/modules/beatmapeditor_main.iml" group="beatmapeditor" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/beatmapeditor_test.iml" filepath="$PROJECT_DIR$/.idea/modules/beatmapeditor_test.iml" group="beatmapeditor" />
     </modules>
   </component>
 </project>

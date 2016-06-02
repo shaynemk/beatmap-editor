@@ -1,5 +1,6 @@
 package com.keller23.java.beatmapeditor.cli;
 
+import com.keller23.java.beatmapeditor.lib.Strings;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -9,7 +10,7 @@ public class CLITest {
     public void printHeader() throws Exception {
         //Verify Header is properly returned as String.
 
-        String expect = "-- Beatmap Editor -- (WIP Header)";
+        String expect = "\n-- Beatmap Editor, v" + Strings.APP_VERSION + " --";
         String actual = CLI.printHeader();
 
         assertSame(expect,actual);

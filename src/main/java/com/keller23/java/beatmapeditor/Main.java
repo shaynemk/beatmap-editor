@@ -24,9 +24,16 @@ public class Main {
                 System.out.println("No arguments given");
             }
         } else if (args.length > 0) {
-            if(args[0].equals("filesTest")) {
+            if(args[0].equals("--filesTest")) {
                 try {
                     Files.listFilesInDir();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else if(args[0].equals("--searchOSU")) {
+                String[] osu = new String[] {"osu"};
+                try {
+                    Files.getExtFilesInDir(osu);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

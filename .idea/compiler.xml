@@ -19,6 +19,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="beatmapeditor_main" target="1.8" />
+      <module name="beatmapeditor_test" target="1.8" />
       <module name="com.keller23.java.beatmapeditor_main" target="1.5" />
       <module name="com.keller23.java.beatmapeditor_test" target="1.5" />
     </bytecodeTargetLevel>

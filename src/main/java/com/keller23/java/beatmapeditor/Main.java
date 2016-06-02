@@ -31,15 +31,24 @@ public class Main {
                     e.printStackTrace();
                 }
             } else if(args[0].equals("--searchOSU")) {
-                String[] osu = new String[] {"osu"};
-                try {
-                    Files.getExtFilesInDir(osu);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if(args.length > 1)  {
+                    try {
+                        Files.getOSUFilesInDir(args[1]);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    try {
+                        Files.getOSUFilesInDir();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
+            } else {
+                System.out.print(CLI.printHelp());
             }
         } else {
-            System.out.println(CLI.printHelp());
+            System.out.print(CLI.printHelp());
         }
     }
 }

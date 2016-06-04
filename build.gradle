@@ -9,6 +9,9 @@ version = "0.1" + "-" + jenkinsBuild
 
 repositories {
     mavenCentral()
+    maven {
+        url 'http://central.maven.org/maven2/'
+    }
     flatDir {
         dirs 'lib'
     }

@@ -4,4 +4,5 @@ public class Strings {
     // TODO: 5/30/16 Integrate this and gradle versions(?)
     public static final String APP_NAME = "Beatmap Editor";
     public static final String APP_VERSION = "0.1";
+    //public static final String APP_VERSION = ( System.getenv("BUILD_NUMBER") ? APPV + "-" + System.getenv("BUILD_NUMBER") : APPV);
 }

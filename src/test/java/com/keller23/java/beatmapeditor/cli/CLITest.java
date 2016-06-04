@@ -11,9 +11,8 @@ public class CLITest {
         //Verify Header is properly returned as String.
 
         String expect = "\n--- Beatmap Editor, v" + Strings.APP_VERSION + " ---";
-        String actual = CLI.printHeader();
 
-        assertSame(expect,actual);
+        assertSame(expect, CLI.printHeader());
     }
 
     @Test
@@ -24,9 +23,7 @@ public class CLITest {
                 "--filesTest\t\t\tDisplay all files in working & all child directories.\n" +
                 "--searchOSU [dir]\t\tSearch for and display all *.osu files in working dir or [dir].\n";
 
-        String actual = CLI.printHelp();
-
-        //assertSame(expect,actual);
+        //assertSame(expect, CLI.printHelp());
     }
 
 }

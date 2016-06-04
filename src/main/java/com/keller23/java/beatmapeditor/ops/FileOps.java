@@ -5,11 +5,13 @@ import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
+import java.util.stream.Stream;
 
 
-public class Files {
-    //private Map<String, String>
+public class FileOps {
 
     public static void listFilesInDir() throws IOException {
         File dir = new File(".");
@@ -80,7 +82,19 @@ public class Files {
         }
     }
 
-    public static void populateMaps() {
+    /*public static void populateMaps() {
 
+    }*/
+
+    /***
+     * Read in config from OSU -- testing
+     * @param filePath - Input path to the .OSU that is to be read
+     */
+    public static void readOSU(String filePath) {
+        try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
+            stream.forEach(System.out::println);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

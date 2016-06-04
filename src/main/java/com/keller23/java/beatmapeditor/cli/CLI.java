@@ -17,6 +17,7 @@ public class CLI {
         return "\n" +
                 "--help\t\t\t\tThis page. Page is also default for unknown commands.\n" +
                 "--filesTest\t\t\tDisplay all files in working & all child directories.\n" +
-                "--searchOSU [dir]\t\tSearch for and display all *.osu files in working dir or [dir].\n";
+                "--searchOSU [dir]\t\tSearch for and display all *.osu files in working dir or [dir].\n" +
+                "--read \"path/to/OSU\"\tOutput contents of OSU.";
     }
 }

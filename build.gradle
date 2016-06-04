@@ -9,15 +9,19 @@ version = "0.1" + "-" + jenkinsBuild
 
 repositories {
     mavenCentral()
+    flatDir {
+        dirs 'lib'
+    }
 }
 
 //TODO Figure out why this whines in IntelliJ, when it works for building the MANIFEST through gradle.
 jar {
     manifest {
-        attributes 'Main-Class': 'com.keller23.java.beatmapeditor.Main'
+        attributes 'Main-Class': 'com.keller23.java.beatmapeditor.Main',
+                'Version': version
     }
 
-    // this little gem adds the files from the CommonsIO lib to the jar on build.
+    // this little gem adds the files from the dep libs to the jar on build.
     from {
         configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
     }
@@ -25,6 +29,5 @@ jar {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    compile "commons-io:commons-io:2.4"
-    compile 'org.apache.commons:commons-configuration2:2.0'
+    compile 'commons-io:commons-io:2.5', 'commons-configuration2:commons-configuration2:2.0', 'log4j:log4j:1.2.17'
 }

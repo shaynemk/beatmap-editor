@@ -2,7 +2,7 @@ package com.keller23.java.beatmapeditor;
 
 
 import com.keller23.java.beatmapeditor.cli.CLI;
-import com.keller23.java.beatmapeditor.ops.Files;
+import com.keller23.java.beatmapeditor.ops.FileOps;
 
 import java.io.IOException;
 
@@ -24,27 +24,31 @@ public class Main {
                 System.out.println("No arguments given");
             }
         } else if (args.length > 0) {
-            if(args[0].equals("--filesTest")) {
+            if (args[0].equals("--filesTest")) {
                 try {
-                    Files.listFilesInDir();
+                    FileOps.listFilesInDir();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } else if(args[0].equals("--searchOSU")) {
-                if(args.length > 1)  {
+            } else if (args[0].equals("--searchOSU")) {
+                if (args.length > 1) {
                     try {
-                        Files.getOSUFilesInDir(args[1]);
+                        FileOps.getOSUFilesInDir(args[1]);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 } else {
                     try {
-                        Files.getOSUFilesInDir();
+                        FileOps.getOSUFilesInDir();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
-            } else {
+            } else if (args[0].equals("--read")) {
+                if(args.length > 1) {
+                    FileOps.readOSU(args[1]);
+                }
+            }else {
                 System.out.print(CLI.printHelp());
             }
         } else {

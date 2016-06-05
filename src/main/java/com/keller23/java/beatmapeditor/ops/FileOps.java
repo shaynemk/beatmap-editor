@@ -33,12 +33,12 @@ public class FileOps {
     }
 
     /***
-     * Lists all files in argDIR.
-     * @param argDir
+     * Lists all files in given directory.
+     * @param _dir Directory to search in.
      * @throws IOException
      */
-    public static void listFilesInDir(String argDir) throws IOException {
-        File dir = new File(argDir);
+    public static void listFilesInDir(String _dir) throws IOException {
+        File dir = new File(_dir);
 
         System.out.println("Getting all files under: " + dir.getPath());
         List<File> files = (List<File>) FileUtils.listFiles(dir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
@@ -48,25 +48,30 @@ public class FileOps {
     }
 
     /***
-     * Gets all files with given String[] of extensions in current/sub directory.
-     * @param extensions
+     * Gets all files with given extensions in current/sub directory.
+     * @param _extensions String[] array of _extensions to filter inclusively.
      * @throws IOException
      */
-    public static void getExtFilesInDir(String[] extensions) throws IOException {
+    public static void getExtFilesInDir(String[] _extensions) throws IOException {
         File dir = new File(".");
         //String[] OSU = new String[] {"osu"};
         System.out.print("Getting all {");
-        for (String ext : extensions) {
+        for (String ext : _extensions) {
             System.out.print("'" + ext + "', ");
         }
         System.out.println("} files in " + dir.getPath());
-        List<File> files = (List<File>) FileUtils.listFiles(dir, extensions, true);
+        List<File> files = (List<File>) FileUtils.listFiles(dir, _extensions, true);
         for (File file : files) {
             System.out.println("file: " + file.getPath());
         }
     }
 
-    public static void getOSUFilesInDir(/*String[] _extensions, */String _dir) throws IOException {
+    /***
+     * Get all OSU files in given/sub directories.
+     * @param _dir This is the root directory of the search for OSU files.
+     * @throws IOException
+     */
+    public static void getOSUFilesInDir(String _dir) throws IOException {
         File dir = new File(_dir);
         String[] OSU = new String[] {"osu"};
         /*System.out.print("Getting all {");
@@ -101,14 +106,14 @@ public class FileOps {
 
     /***
      * Read in config from OSU -- testing
-     * @param filePath - Input path to the .OSU that is to be read
+     * @param _filePath Input path to the .OSU that is to be read
      */
-    public static void readOSUVersion(String filePath) {
+    public static void readOSUVersion(String _filePath) {
         List<String> osuVersion = new ArrayList<>();
         List<String> difficultyOptions = new ArrayList<>();
 
         // get the OSU Version
-        try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
+        try (Stream<String> stream = Files.lines(Paths.get(_filePath))) {
             //stream.forEach(System.out::println);
             osuVersion = stream
                     .filter(line -> line.startsWith("osu file format"))
@@ -118,7 +123,7 @@ public class FileOps {
         }
 
         // get the Difficulty options we want to track
-        try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
+        try (Stream<String> stream = Files.lines(Paths.get(_filePath))) {
             difficultyOptions = stream
                     .filter(line -> line.startsWith("OverallDifficulty") || line.startsWith("ApproachRate"))
                     .collect(Collectors.toList());
@@ -126,14 +131,14 @@ public class FileOps {
             e.printStackTrace();
         }
 
-        System.out.println("---- " + filePath.split("\\\\")[filePath.split("\\\\").length-1] + ":");
+        System.out.println("---- " + _filePath.split("\\\\")[_filePath.split("\\\\").length-1] + ":");
         osuVersion.forEach(System.out::println);
         difficultyOptions.forEach(System.out::println);
     }
 
     /***
-     * Gets all the OSU's in the path, then sends to readOSUVersion() to extract information from them.
-     * @param _dir
+     * Searches given directory for OSU files, sends each to readOSUVersion.
+     * @param _dir Directory to search.
      */
     public static void getAllInPath(String _dir) {
         File dir = new File(_dir);

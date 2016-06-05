@@ -1,5 +1,6 @@
 package com.keller23.java.beatmapeditor.ops;
 
+import org.apache.commons.configuration2.CompositeConfiguration;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
@@ -12,6 +13,8 @@ import java.util.stream.Stream;
 
 
 public class FileOps {
+
+    private CompositeConfiguration config = new CompositeConfiguration();
 
     public static void listFilesInDir() throws IOException {
         File dir = new File(".");
@@ -96,5 +99,6 @@ public class FileOps {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 }

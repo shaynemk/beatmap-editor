@@ -39,7 +39,7 @@ public class Main {
                     }
                 } else {
                     try {
-                        FileOps.getOSUFilesInDir();
+                        FileOps.printOSUFilesInDir();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -50,7 +50,7 @@ public class Main {
                 }
             } else if (args[0].equals("--readAllVersions")) {
                 if(args.length > 1) {
-                    FileOps.readOSUVersions(args[1]);
+                    FileOps.getAllInPath(args[1]);
                 }
             } else {
                 System.out.println(CLI.printHelp());

@@ -1,6 +1,5 @@
 package com.keller23.java.beatmapeditor.ops;
 
-import org.apache.commons.configuration2.CompositeConfiguration;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
@@ -16,8 +15,12 @@ import java.util.stream.Stream;
 
 public class FileOps {
 
-    private CompositeConfiguration config = new CompositeConfiguration();
+    //private CompositeConfiguration config = new CompositeConfiguration();
 
+    /***
+     * List all files in current/sub dir.
+     * @throws IOException
+     */
     public static void listFilesInDir() throws IOException {
         File dir = new File(".");
 
@@ -29,8 +32,13 @@ public class FileOps {
         }
     }
 
-    public static void listFilesInDir(String argDIR) throws IOException {
-        File dir = new File(argDIR);
+    /***
+     * Lists all files in argDIR.
+     * @param argDir
+     * @throws IOException
+     */
+    public static void listFilesInDir(String argDir) throws IOException {
+        File dir = new File(argDir);
 
         System.out.println("Getting all files under: " + dir.getPath());
         List<File> files = (List<File>) FileUtils.listFiles(dir, TrueFileFilter.INSTANCE, TrueFileFilter.INSTANCE);
@@ -39,6 +47,11 @@ public class FileOps {
         }
     }
 
+    /***
+     * Gets all files with given String[] of extensions in current/sub directory.
+     * @param extensions
+     * @throws IOException
+     */
     public static void getExtFilesInDir(String[] extensions) throws IOException {
         File dir = new File(".");
         //String[] OSU = new String[] {"osu"};
@@ -70,14 +83,13 @@ public class FileOps {
         }
     }
 
-    public static void getOSUFilesInDir() throws IOException {
+    /***
+     * Print all the OSU Files in Directory and Subdirectories.
+     * @throws IOException
+     */
+    public static void printOSUFilesInDir() throws IOException {
         File dir = new File(".");
         String[] OSU = new String[] {"osu"};
-        /*System.out.print("Getting all {");
-        for (String ext : _extensions) {
-            System.out.print(ext + ", ");
-        }
-        System.out.println("} files in " + dir.getPath());*/
 
         System.out.println("Searching for all *.osu under " + dir.getPath() + "...");
 
@@ -86,10 +98,6 @@ public class FileOps {
             System.out.println("file: " + file.getPath());
         }
     }
-
-    /*public static void populateMaps() {
-
-    }*/
 
     /***
      * Read in config from OSU -- testing
@@ -123,7 +131,11 @@ public class FileOps {
         difficultyOptions.forEach(System.out::println);
     }
 
-    public static void readOSUVersions(String _dir) {
+    /***
+     * Gets all the OSU's in the path, then sends to readOSUVersion() to extract information from them.
+     * @param _dir
+     */
+    public static void getAllInPath(String _dir) {
         File dir = new File(_dir);
         String[] OSUFilter = new String[] {"osu"};
         List<File> files = (List<File>) FileUtils.listFiles(dir, OSUFilter, true);

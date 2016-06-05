@@ -1,11 +1,31 @@
 apply plugin: 'java'
-//sourceCompatibility = 1.5
+//apply plugin: 'checkstyle'
 
+//sourceCompatibility = 1.5
 group 'beatmap-editor'
 
 //version '1.0'
 def jenkinsBuild = System.getenv("BUILD_NUMBER") as String ?: "IDE"
 version = "0.1" + "-" + jenkinsBuild
+
+/*checkstyle {
+    toolVersion = '6.4.1'
+    sourceSets = [sourceSets.main]
+    configFile = rootProject.file("config/checkstyle/checkstyle.xml");
+    showViolations = true
+    ignoreFailures = true
+}
+
+checkstyleTest {
+    enabled = false
+}
+
+tasks.withType(Checkstyle) {
+    reports {
+        html.destination rootProject.file("build/reports/checkstyle.html")
+    }
+}*/
+
 
 repositories {
     mavenCentral()

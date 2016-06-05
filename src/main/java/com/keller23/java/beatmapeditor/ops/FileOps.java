@@ -8,7 +8,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 
@@ -93,11 +95,42 @@ public class FileOps {
      * Read in config from OSU -- testing
      * @param filePath - Input path to the .OSU that is to be read
      */
-    public static void readOSU(String filePath) {
+    public static void readOSUVersion(String filePath) {
+        List<String> osuVersion = new ArrayList<>();
+        List<String> difficultyOptions = new ArrayList<>();
+
+        // get the OSU Version
         try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
-            stream.forEach(System.out::println);
+            //stream.forEach(System.out::println);
+            osuVersion = stream
+                    .filter(line -> line.startsWith("osu file format"))
+                    .collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }//
+
+        // get the Difficulty options we want to track
+        try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
+            difficultyOptions = stream
+                    .filter(line -> line.startsWith("OverallDifficulty") || line.startsWith("ApproachRate"))
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("---- " + filePath.split("\\\\")[filePath.split("\\\\").length-1] + ":");
+        osuVersion.forEach(System.out::println);
+        difficultyOptions.forEach(System.out::println);
+    }
+
+    public static void readOSUVersions(String _dir) {
+        File dir = new File(_dir);
+        String[] OSUFilter = new String[] {"osu"};
+        List<File> files = (List<File>) FileUtils.listFiles(dir, OSUFilter, true);
+
+        for (File file : files) {
+            //System.out.println("file: " + file.getPath());
+            readOSUVersion(file.getPath());
+        }
+    }
 }

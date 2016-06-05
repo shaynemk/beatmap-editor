@@ -44,15 +44,19 @@ public class Main {
                         e.printStackTrace();
                     }
                 }
-            } else if (args[0].equals("--read")) {
+            } else if (args[0].equals("--readVersion")) {
                 if(args.length > 1) {
-                    FileOps.readOSU(args[1]);
+                    FileOps.readOSUVersion(args[1]);
                 }
-            }else {
-                System.out.print(CLI.printHelp());
+            } else if (args[0].equals("--readAllVersions")) {
+                if(args.length > 1) {
+                    FileOps.readOSUVersions(args[1]);
+                }
+            } else {
+                System.out.println(CLI.printHelp());
             }
         } else {
-            System.out.print(CLI.printHelp());
+            System.out.println(CLI.printHelp());
         }
     }
 }

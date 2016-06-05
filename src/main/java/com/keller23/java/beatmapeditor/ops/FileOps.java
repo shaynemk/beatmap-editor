@@ -105,7 +105,7 @@ public class FileOps {
     }
 
     /***
-     * Read in config from OSU -- testing
+     * Read information from individual OSU files.
      * @param _filePath Input path to the .OSU that is to be read
      */
     public static void readOSUVersion(String _filePath) {
@@ -131,7 +131,7 @@ public class FileOps {
             e.printStackTrace();
         }
 
-        System.out.println("---- " + _filePath.split("\\\\")[_filePath.split("\\\\").length-1] + ":");
+        System.out.println("\n---- " + _filePath.split("\\\\")[_filePath.split("\\\\").length-1] + ":");
         osuVersion.forEach(System.out::println);
         difficultyOptions.forEach(System.out::println);
     }

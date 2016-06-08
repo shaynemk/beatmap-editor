@@ -2,6 +2,7 @@ package com.keller23.java.beatmapeditor.ops;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -21,26 +22,31 @@ public class FileOpsTest {
 
     }
 
+    @Ignore
     @Test
     public void listFilesInDir() throws Exception {
 
     }
 
+    @Ignore
     @Test
     public void listFilesInDir1() throws Exception {
 
     }
 
+    @Ignore
     @Test
     public void getExtFilesInDir() throws Exception {
 
     }
 
+    @Ignore
     @Test
     public void getOSUFilesInDir() throws Exception {
 
     }
 
+    @Ignore
     @Test
     public void getOSUFilesInDir1() throws Exception {
 
@@ -49,7 +55,7 @@ public class FileOpsTest {
     @Test
     public void readOSUVersion() throws Exception {
         String testOSU = songDir + "Chatmonchy - Make Up! Make Up!\\Chatmonchy - Make Up! Make Up! (peppy) [Hard].osu";
-        FileOps.readOSUVersion(testOSU);
+        FileOps.readFileVersion(testOSU);
     }
 
     @Test

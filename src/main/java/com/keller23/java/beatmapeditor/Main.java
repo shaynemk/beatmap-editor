@@ -45,7 +45,7 @@ public class Main {
                     }
                 }
             } else if (args[0].equals("--readVersion") && args.length > 1) {
-                FileOps.readOSUVersion(args[1]);
+                FileOps.readFileVersion(args[1]);
             } else if (args[0].equals("--readAllVersions") && args.length > 1) {
                 FileOps.getAllInPath(args[1]);
             } else {

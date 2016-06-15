@@ -140,6 +140,36 @@ public class FileOps {
     }
 
     /***
+     * New method for reading the OSU given
+     * @param filePath Path to OSU
+     */
+    public static void readFile(final String filePath) {
+        OSU osuFile = new OSU(filePath);
+        printFileBits(osuFile);
+    }
+
+    /***
+     * Print out the properties extracted from the OSU file.
+     * @param osuFile OSU File object
+     */
+    private static void printFileBits(final OSU osuFile) {
+        // Print file version
+        if (osuFile.fileVersion != null && !osuFile.fileVersion.isEmpty()) {
+            System.out.println("OSU File Version: " + osuFile.fileVersion);
+        } else {
+            System.out.println("OSU File Version is not stored as it should be.");
+        }
+
+        // Print properties
+        osuFile.properties.forEach((k, v) -> {
+            if (!k.startsWith("osu file version v")) {
+                System.out.println(k + ": " + v);
+            }
+            /*if (k.equals(""))*/
+        });
+    }
+
+    /***
      * Searches given directory for OSU files, sends each to readFileVersion.
      * @param dir Directory to search.
      */

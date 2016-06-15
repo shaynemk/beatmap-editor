@@ -14,7 +14,7 @@ public class Main {
         // TODO: 5/30/16 Clean this up, being real logic.
         System.out.println(CLI.printHeader());
 
-        if(DEBUG) {
+        if (DEBUG) {
             if (args.length > 0) {
                 System.out.println("Args Given (" + args.length + "):");
                 for (String arg : args) {
@@ -48,6 +48,8 @@ public class Main {
                 FileOps.readFileVersion(args[1]);
             } else if (args[0].equals("--readAllVersions") && args.length > 1) {
                 FileOps.getAllInPath(args[1]);
+            } else if (args[0].equals("--read") && args.length > 1) {
+                FileOps.readFile(args[1]);
             } else {
                 System.out.println(CLI.printHelp());
             }

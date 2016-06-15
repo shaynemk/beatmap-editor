@@ -17,6 +17,7 @@ public class CLI {
                 "--filesTest\t\t\t\tDisplay all files in working & all child directories.\n" +
                 "--searchOSU [dir]\t\t\tSearch for and display all *.osu files in working dir or [dir].\n" +
                 "--readVersion \"path/to/OSU\"\t\tOutput version of OSU.\n" +
-                "--readAllVersions \"path/of/OSUs\"\tOutput version of all OSU's in path given.";
+                "--readAllVersions \"path/of/OSUs\"\tOutput version of all OSU's in path given." +
+                "--read \"path/to/OSU\"\tPrint all properties of OSU file that we are reading in.";
     }
 }

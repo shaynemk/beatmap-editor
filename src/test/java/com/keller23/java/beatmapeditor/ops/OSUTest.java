@@ -37,18 +37,19 @@ public class OSUTest {
     public void testInstantiation() throws Exception {
         osuInfo = new OSU(tmpOSULocation);
         Assert.assertNotNull(osuInfo);
-        osuInfo = null;
+        osuInfo = null; //todo gotta remember why this statement is here when we use it later on...
     }
 
-    @Ignore
     @Test
     public void testVersion() throws Exception {
         final String expectedVersion = "5";
 
-        osuInfo = new OSU(tmpOSULocation);
+        if (osuInfo == null) {
+            osuInfo = new OSU(tmpOSULocation);
+        }
 
         Assert.assertNotNull(/*"OSU.fileVersion has evaluated to null.", */osuInfo.fileVersion);
-        Assert.assertSame("Expected and Actual OSU.fileVersion are not the same.",
+        Assert.assertEquals("Expected and Actual OSU.fileVersion are not the same.",
                 expectedVersion, osuInfo.fileVersion);
     }
 

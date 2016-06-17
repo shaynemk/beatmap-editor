@@ -5,9 +5,6 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-/**
- * Created by under on 6/5/2016.
- */
 public class FileOpsTest {
 
     private final String songDir = ".\\spec\\mockSongs\\";

@@ -10,3 +10,9 @@ Utility for editing beatmaps in bulk.
 -Low: Remember previous option values.<br>
 -Other things it needs to do, duh.<br>
 -Persistent settings file for common options?
+
+
+== Roadmap ==<br>
+-Build up/Complete CLI tool.
+-Build GUI.
+-Other things?

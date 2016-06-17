@@ -48,9 +48,9 @@ public class OSU {
 
             try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
                 //take 2
-                /*allProps =*/ stream.filter(line -> line.contains(":")
-                        || line.startsWith("osu file format v"))
-                        .collect(Collectors.toList())//;
+                /*allProps =*/ stream.filter(line -> !line.contains("|")
+                        && (line.contains(":") || line.startsWith("osu file format v")))
+                        .collect(Collectors.toList())
                         .forEach(e -> {
                             if (e.contains(":")) {
                                 readProperties(e);
@@ -97,6 +97,7 @@ public class OSU {
      * Dedicated string manipulation to extract the version from the version line.
      * @param version contains the versions listed in OSU file
      */
+    @Deprecated
     private void readVersionL(final List<String> version) throws IOException {
         //log.debug("readVersion('" + version + "')");
         //System.out.println("readVersion('" + version + "')");

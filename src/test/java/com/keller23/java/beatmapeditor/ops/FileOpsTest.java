@@ -24,43 +24,9 @@ public class FileOpsTest {
 
     @Ignore
     @Test
-    public void listFilesInDir() throws Exception {
-
-    }
-
-    @Ignore
-    @Test
-    public void listFilesInDir1() throws Exception {
-
-    }
-
-    @Ignore
-    @Test
-    public void getExtFilesInDir() throws Exception {
-
-    }
-
-    @Ignore
-    @Test
-    public void getOSUFilesInDir() throws Exception {
-
-    }
-
-    @Ignore
-    @Test
-    public void getOSUFilesInDir1() throws Exception {
-
-    }
-
-    @Test
     public void readOSUVersion() throws Exception {
         String testOSU = songDir + "Chatmonchy - Make Up! Make Up!\\Chatmonchy - Make Up! Make Up! (peppy) [Hard].osu";
         FileOps.readFileVersion(testOSU);
-    }
-
-    @Test
-    public void readOSUVersions() throws Exception {
-
     }
 
 }

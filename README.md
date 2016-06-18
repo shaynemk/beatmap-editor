@@ -13,6 +13,7 @@ Utility for editing beatmaps in bulk.
 
 
 == Roadmap ==<br>
--Build up/Complete CLI tool.
--Build GUI.
--Other things?
+-Build up/Complete CLI tool.<br>
+-Build GUI.<br>
+-Other things?<br>
+-Profit $$$<br>

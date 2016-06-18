@@ -1,19 +1,26 @@
 package com.keller23.java.beatmapeditor.ops;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class OSUTest {
 
     private final String tmpOSULocation = "./tmp.osu";
+    private Map<String, String> expectedProperties;
 
-    public OSU osuInfo;
-    public File osuFile;
+    private OSU osuInfo;
+    private File osuFile;
 
     @Before
     public void setUp() throws Exception {
@@ -25,6 +32,9 @@ public class OSUTest {
         OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(osuFile), System.getProperty("file.encoding"));
         osw.write(demoOSU);
         osw.close();
+
+        // Write expected properties map.
+        expectedProperties = createPropertiesMap();
     }
 
     @After
@@ -36,8 +46,8 @@ public class OSUTest {
     @Test
     public void testInstantiation() throws Exception {
         osuInfo = new OSU(tmpOSULocation);
-        Assert.assertNotNull(osuInfo);
-        osuInfo = null; //todo gotta remember why this statement is here when we use it later on...
+        Assert.assertNotNull("osuInfo is null after instantiation.",osuInfo);
+        osuInfo = null; //todo gotta remember why this statement is here when we use osuInfo later on...
     }
 
     @Test
@@ -48,10 +58,51 @@ public class OSUTest {
             osuInfo = new OSU(tmpOSULocation);
         }
 
-        Assert.assertNotNull(/*"OSU.fileVersion has evaluated to null.", */osuInfo.fileVersion);
-        Assert.assertEquals("Expected and Actual OSU.fileVersion are not the same.",
-                expectedVersion, osuInfo.fileVersion);
+        Assert.assertNotNull("OSU.getVersion() gave us a null. Why, damnit, why!?", osuInfo.getVersion());
+        Assert.assertEquals("Expected and Actual OSU.getVersion() results are not the same.",
+                expectedVersion, osuInfo.getVersion());
     }
+
+    @Test
+    public void testPropertiesGetter() throws Exception {
+        if (osuInfo == null) {
+            osuInfo = new OSU(tmpOSULocation);
+        }
+
+        Assert.assertEquals("Actual and Expected Properties Maps are not equal.", expectedProperties, osuInfo.getProperties());
+        if (!expectedProperties.equals(osuInfo.getProperties())) {
+            System.out.println("Expected: " + expectedProperties.toString());
+            System.out.println("Actual: " + osuInfo.getProperties().toString());
+        }
+    }
+
+
+    private Map<String, String> createPropertiesMap() {
+        Map<String, String> result = new HashMap<String, String>();
+        String[] splitt;
+        for (String prop : expectedPropertiesRaw) {
+            splitt = prop.split(":");
+            result.putIfAbsent(splitt[0].trim(), splitt[1].trim());
+        }
+        return Collections.unmodifiableMap(result);
+    }
+
+    private final String[] expectedPropertiesRaw = {"AudioFilename: chatmonchy - 02 - Make Up! Make Up!.mp3",
+            "AudioLeadIn: 0",
+            "AudioHash: 6c9ddb3ad3f4b8559d27a25dfdc8bb8a",
+            "PreviewTime: -1",
+            "Countdown: 0",
+            "SampleSet: Normal",
+            "EditorBookmarks: 41229,84086",
+            "Title: Make Up! Make Up!",
+            "Artist: Chatmonchy",
+            "Creator: peppy",
+            "Version: Hard",
+            "HPDrainRate: 5",
+            "CircleSize: 5",
+            "OverallDifficulty: 5",
+            "SliderMultiplier: 1.4",
+            "SliderTickRate: 2"};
 
     private final String demoOSU = "osu file format v5\n" +
             "\n" +

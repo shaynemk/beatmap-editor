@@ -24,6 +24,7 @@ public class FileOpsTest {
     public void readOSUVersion() throws Exception {
         String testOSU = songDir + "Chatmonchy - Make Up! Make Up!\\Chatmonchy - Make Up! Make Up! (peppy) [Hard].osu";
         FileOps.readFileVersion(testOSU);
+        //TODO Do something about this test not actually testing anything....
     }
 
 }

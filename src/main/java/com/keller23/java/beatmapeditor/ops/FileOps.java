@@ -17,8 +17,6 @@ import java.util.stream.Stream;
  */
 public class FileOps {
 
-    //private Map<String> configs = null;
-
     /***
      * List all files in current/sub dir.
      * @throws IOException
@@ -144,6 +142,7 @@ public class FileOps {
      * @param filePath Path to OSU
      */
     public static void readFile(final String filePath) {
+        // Create OSU container, parse .osu file.
         OSU osuFile = new OSU(filePath);
         printFileBits(osuFile);
     }
@@ -154,18 +153,17 @@ public class FileOps {
      */
     private static void printFileBits(final OSU osuFile) {
         // Print file version
-        if (osuFile.fileVersion != null && !osuFile.fileVersion.isEmpty()) {
-            System.out.println("OSU File Version: " + osuFile.fileVersion);
+        if (osuFile.getVersion() != null && !osuFile.getVersion().isEmpty()) {
+            System.out.println("OSU File Version: " + osuFile.getVersion());
         } else {
             System.out.println("OSU File Version is not stored as it should be.");
         }
 
         // Print properties
-        osuFile.properties.forEach((k, v) -> {
+        osuFile.getProperties().forEach((k, v) -> {
             if (!k.startsWith("osu file version v")) {
                 System.out.println(k + ": " + v);
             }
-            /*if (k.equals(""))*/
         });
     }
 

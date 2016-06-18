@@ -16,29 +16,19 @@ public class OSU {
     /***
      * OSU File Version
      */
-    String fileVersion;
+    private String Version;
 
     /***
-     * [Metadata]
-     * Title: *
-     * Artist: *
-     * Creator: *
-     * Version: *
+     * An attempt at creating a Properties storage container.
      */
-    //String title, artist, creator, version;
-    //@Deprecated
-    //Map<String, Object> metadata;
-
-    Map<String, String> properties = new HashMap<String, String>();
-
-    //List<String> allProps;
+    private Map<String, String> Properties = new HashMap<String, String>();
 
 
     /***
-     * Configure the class upon instantiation
+     * OSU object constructor.
      * @param filePath Location of the OSU file.
      */
-    public OSU(final String filePath) {
+    OSU(final String filePath) {
         //log.debug("OSU Constructor; given: " + filePath);
         //System.out.println("OSU Constructor; given: " + filePath);
         // Check the file exists, then open it and start extracting info.
@@ -47,8 +37,7 @@ public class OSU {
             //System.out.println("File exists: " + filePath);
 
             try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
-                //take 2
-                /*allProps =*/ stream.filter(line -> !line.contains("|")
+                stream.filter(line -> !line.contains("|")
                         && (line.contains(":") || line.startsWith("osu file format v")))
                         .collect(Collectors.toList())
                         .forEach(e -> {
@@ -58,60 +47,66 @@ public class OSU {
                                 readVersionS(e);
                             }
                         });
-                /*allProps.forEach(line -> {
-                    if (line.contains(":")) {
-                        readProperties(line);
-                    } else if (line.startsWith("osu file format v")) {
-                        readVersionS(line);
-                    }
-                });*/
-
-/*            // Feed the String[] directly into readVersion to avoid using another variable.
-                readVersionL(stream
-                        .filter(line -> line.startsWith("osu file format"))
-                        .collect(Collectors.toList()));
-
-                //(OLD) Read Metadata props in
-                List<String> tmpMetadata = stream
-                        .filter(line -> line.startsWith("Title:") || line.startsWith("Artist:") || line.startsWith("Creator:") || line.startsWith("Version"))
-                        .collect(Collectors.toList());
-                //readMetadata(tmpMetadata);
-                //tmpMetadata.clear();
-
-                //(NEW) Read in OSU File properties
-                List<String> tmpProps = stream
-                        .filter(line -> line.contains(":") && !line.contains(","))
-                        .collect(Collectors.toList());
-                readProperties(tmpProps);*/
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("OSU Instantiation failed: No file given in instantiation argument.");
+            System.out.println("OSU Instantiation failed: File given doesn't exist.");
         }
     }
 
     /***
-     * Dedicated string manipulation to extract the version from the version line.
+     * getVersion() returns the Version of the OSU.
+     * @return Version Version of the OSU file.
+     */
+    public final String getVersion() {
+        return Version;
+    }
+
+    /***
+     * Setting the file Version is disabled.
+     * @param version Version of the OSU file.
+     */
+    public final void setVersion(final String version) {
+        //this.Version = Version;
+    }
+
+    /***
+     * getProperties() returns all the currently known Properties.
+     * @return Properties
+     */
+    public Map<String, String> getProperties() {
+        return Properties;
+    }
+
+    /***
+     * Setting the properties externally has been disabled.
+     * @param properties of the form Map<String, String>, contains properties from OSU file.
+     */
+    public void setProperties(final Map<String, String> properties) {
+        //this.Properties = properties;
+    }
+
+    /***
+     * Dedicated string manipulation to extract the Version from the Version line.
      * @param version contains the versions listed in OSU file
+     * @throws IOException
      */
     @Deprecated
     private void readVersionL(final List<String> version) throws IOException {
-        //log.debug("readVersion('" + version + "')");
-        //System.out.println("readVersion('" + version + "')");
+        //log.debug("readVersion('" + Version + "')");
+        //System.out.println("readVersion('" + Version + "')");
 
-        // Make sure there is only one entry, as there should only be one version line in the OSU.
+        // Make sure there is only one entry, as there should only be one Version line in the OSU.
         if (version.size() == 1) {
-            //log.debug("version.size() == 1");
-            //System.out.println("version.size() == 1");
-            this.fileVersion = version.get(0).substring(version.get(0).length() - 1);
-            //log.debug(this.fileVersion);
-            //System.out.println(this.fileVersion);
+            //log.debug("Version.size() == 1");
+            //System.out.println("Version.size() == 1");
+            this.Version = version.get(0).substring(version.get(0).length() - 1);
+            //log.debug(this.Version);
+            //System.out.println(this.Version);
         } else {
-            //log.debug("version.size !=
-            System.out.println("version.size != 1");
+            //log.debug("Version.size !=
+            System.out.println("Version.size != 1");
             throw new IOException("OSU File either doesn't have or has too many file format definitions.");
         }
     }
@@ -121,7 +116,7 @@ public class OSU {
      * @param version
      */
     private void readVersionS(final String version) {
-        this.fileVersion = version.substring(version.length() - 1);
+        this.Version = version.substring(version.length() - 1);
     }
 
     /***
@@ -136,12 +131,12 @@ public class OSU {
     }
 
     /***
-     * readProperties - Reads properties from List of Strings into the properties map.
-     * @param prop
+     * readProperties - Reads Properties from List of Strings into the Properties map.
+     * @param prop Property string given to OSU object to parse and insert.
      */
     private void readProperties(final String prop) {
         String[] splitProp = prop.split(":");
-        this.properties.putIfAbsent(splitProp[0].trim(), splitProp[1].trim());
+        this.Properties.putIfAbsent(splitProp[0].trim(), splitProp[1].trim());
     }
 
     /*public static void readFileVersion(final String filePath) {

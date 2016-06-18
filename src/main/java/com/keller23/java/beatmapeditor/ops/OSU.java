@@ -81,7 +81,7 @@ public class OSU {
 
     /***
      * Setting the properties externally has been disabled.
-     * @param properties of the form Map<String, String>, contains properties from OSU file.
+     * @param properties of the form Map(String,String), contains properties from OSU file.
      */
     public void setProperties(final Map<String, String> properties) {
         //this.Properties = properties;

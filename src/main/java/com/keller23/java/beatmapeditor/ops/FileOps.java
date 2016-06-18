@@ -19,7 +19,7 @@ public class FileOps {
 
     /***
      * List all files in current/sub dir.
-     * @throws IOException
+     * @throws IOException Explanation
      */
     public static void listFilesInDir() throws IOException {
         File dir = new File(".");
@@ -36,7 +36,7 @@ public class FileOps {
     /***
      * Lists all files in given directory.
      * @param dir Directory to search in.
-     * @throws IOException
+     * @throws IOException Explanation
      */
     public static void listFilesInDir(final String dir) throws IOException {
         File directory = new File(dir);
@@ -51,7 +51,7 @@ public class FileOps {
     /***
      * Gets all files with given extensions in current/sub directory.
      * @param extensions String[] array of _extensions to filter inclusively.
-     * @throws IOException
+     * @throws IOException Explanation
      */
     public static void getExtFilesInDir(final String[] extensions) throws IOException {
         File dir = new File(".");
@@ -70,7 +70,7 @@ public class FileOps {
     /***
      * Get all OSU files in given/sub directories.
      * @param dir This is the root directory of the search for OSU files.
-     * @throws IOException
+     * @throws IOException Explanation
      */
     public static void getOSUFilesInDir(final String dir) throws IOException {
         File file = new File(dir);
@@ -91,7 +91,7 @@ public class FileOps {
 
     /***
      * Print all the OSU Files in Directory and Subdirectories.
-     * @throws IOException
+     * @throws IOException Explanation
      */
     public static void printOSUFilesInDir() throws IOException {
         File dir = new File(".");

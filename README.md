@@ -1,4 +1,4 @@
-# beatmap-editor [![Build Status](https://keller23.com/jenkins/job/beatmap-editor/badge/icon)](https://keller23.com/jenkins/job/beatmap-editor)
+# beatmap-editor 
 Utility for editing beatmaps in bulk.
 
 

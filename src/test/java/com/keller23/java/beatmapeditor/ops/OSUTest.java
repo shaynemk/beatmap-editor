@@ -35,17 +35,24 @@ public class OSUTest {
 
         // Write expected properties map.
         expectedProperties = createPropertiesMap();
+
+        // init OSU object
+        initOSU();
     }
 
     @After
     public void tearDown() throws Exception {
         // Delete the temp OSU file as we are done with it for now.
         Files.deleteIfExists(Paths.get(tmpOSULocation));
+
+        osuFile = null;
+        osuInfo = null;
     }
 
     @Test
     public void testInstantiation() throws Exception {
-        osuInfo = new OSU(tmpOSULocation);
+        initOSU();
+
         Assert.assertNotNull("osuInfo is null after instantiation.",osuInfo);
         osuInfo = null; //todo gotta remember why this statement is here when we use osuInfo later on...
     }
@@ -54,9 +61,7 @@ public class OSUTest {
     public void testVersion() throws Exception {
         final String expectedVersion = "5";
 
-        if (osuInfo == null) {
-            osuInfo = new OSU(tmpOSULocation);
-        }
+        initOSU();
 
         Assert.assertNotNull("OSU.getVersion() gave us a null. Why, damnit, why!?", osuInfo.getVersion());
         Assert.assertEquals("Expected and Actual OSU.getVersion() results are not the same.",
@@ -65,9 +70,7 @@ public class OSUTest {
 
     @Test
     public void testPropertiesGetter() throws Exception {
-        if (osuInfo == null) {
-            osuInfo = new OSU(tmpOSULocation);
-        }
+        initOSU();
 
         Assert.assertEquals("Actual and Expected Properties Maps are not equal.", expectedProperties, osuInfo.getProperties());
         if (!expectedProperties.equals(osuInfo.getProperties())) {
@@ -76,6 +79,20 @@ public class OSUTest {
         }
     }
 
+    @Test
+    public void testFileLocationGetter() throws Exception {
+        initOSU();
+
+
+    }
+
+    /* -- Helper Code -- */
+
+    private void initOSU() {
+        if (osuInfo == null) {
+            osuInfo = new OSU(tmpOSULocation);
+        }
+    }
 
     private Map<String, String> createPropertiesMap() {
         Map<String, String> result = new HashMap<String, String>();

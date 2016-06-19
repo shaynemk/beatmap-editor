@@ -14,6 +14,11 @@ public class OSU {
     //private Log log;
 
     /***
+     * Filepath of OSU file this object refers to.
+     */
+    private String fileLocation;
+
+    /***
      * OSU File Version
      */
     private String Version;
@@ -35,6 +40,8 @@ public class OSU {
         if (Files.exists(Paths.get(filePath))) {
             //log.debug("File exists: " + filePath);
             //System.out.println("File exists: " + filePath);
+
+            this.fileLocation = filePath;
 
             try (Stream<String> stream = Files.lines(Paths.get(filePath))) {
                 stream.filter(line -> !line.contains("|")
@@ -75,7 +82,7 @@ public class OSU {
      * getProperties() returns all the currently known Properties.
      * @return Properties
      */
-    public Map<String, String> getProperties() {
+    public final Map<String, String> getProperties() {
         return Properties;
     }
 
@@ -83,8 +90,16 @@ public class OSU {
      * Setting the properties externally has been disabled.
      * @param properties of the form Map(String,String), contains properties from OSU file.
      */
-    public void setProperties(final Map<String, String> properties) {
+    public final void setProperties(final Map<String, String> properties) {
         //this.Properties = properties;
+    }
+
+    /***
+     * Get the file location for this OSU.
+     * @return fileLocation Location of OSU file on drive.
+     */
+    public final String getFileLocation() {
+        return fileLocation;
     }
 
     /***

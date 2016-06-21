@@ -6,10 +6,12 @@ import com.keller23.java.beatmapeditor.ops.FileOps;
 
 public class Main {
 
-    private static final Boolean DEBUG = false;
-
+    /***
+     * Main Program Entrance
+     * @param args
+     */
     public static void main(final String[] args) {
-        // TODO: 5/30/16 Clean this up, being real logic.
+
         System.out.println(CLI.printHeader());
 
         if (args.length > 1) switch (args[0]) {
@@ -28,6 +30,8 @@ public class Main {
                 //System.out.println("First argument is unknown.");
                 System.out.println(CLI.printHelp());
                 break;
+        } else if (args[0].equals("--interactive")) {
+            CLI.interactiveMode();
         } else {
             System.out.println(CLI.printHelp());
         }

@@ -30,7 +30,7 @@ public class CLITest {
 
     @Test
     public void printHeader() throws Exception {
-        String expect = "\n--- Beatmap Editor, v" + Strings.APP_VERSION + " ---\n";
+        String expect = System.lineSeparator() + "--- Beatmap Editor, v" + Strings.APP_VERSION + " ---" + System.lineSeparator();
 
         System.out.print(CLI.printHeader());
 
@@ -43,8 +43,8 @@ public class CLITest {
     public void printHelp() throws Exception {
         //Verify Help is properly returned as String.
 
-        String expect =   "--help\t\t\t\t\tThis page, also default.\n"
-                        + "--readVersion \"path/to/OSU\"\t\tOutput version of OSU.\n"
+        String expect =   "--help\t\t\t\t\tThis page, also default." + System.lineSeparator()
+                        + "--readVersion \"path/to/OSU\"\t\tOutput version of OSU." + System.lineSeparator()
                         + "--read \"path/to/OSU\"\t\t\tPrint all properties of OSU file that we are reading in.";
 
         System.out.print(CLI.printHelp());

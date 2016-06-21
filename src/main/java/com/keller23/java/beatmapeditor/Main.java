@@ -8,7 +8,7 @@ public class Main {
 
     /***
      * Main Program Entrance
-     * @param args
+     * @param args arguments passed via commandline
      */
     public static void main(final String[] args) {
 
@@ -30,7 +30,7 @@ public class Main {
                 //System.out.println("First argument is unknown.");
                 System.out.println(CLI.printHelp());
                 break;
-        } else if (args[0].equals("--interactive")) {
+        } else if (args.length == 1 && args[0].equals("--interactive")) {
             CLI.interactiveMode();
         } else {
             System.out.println(CLI.printHelp());

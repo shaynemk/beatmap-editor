@@ -9,12 +9,23 @@ import java.util.Scanner;
  */
 public class CLI {
 
+    private static final int MENU_NUM_NUMOSU = 1;
+    private static final int MENU_NUM_OSUPATH = 2;
+    private static final int MENU_NUM_PROCESS = 5;
+    private static final int MENU_NUM_EXIT = 99;
+
+    private static String MENU_STR_NUMOSU = "1. [Single] / Multiple OSUs.";
+    private static String MENU_STR_OSUPATH = "2. Path to OSU(s): [./]"; //todo Get the system local path separator instead of using only '/'.
+    private static String MENU_STR_OTHER = "3. ** OTHER OPTIONS.";
+    private static String MENU_STR_PROCESS = "5. Process OSU changes.";
+    private static String MENU_STR_EXIT = "99. Discard and Exit.";
+
     /***
      * Returns the string to print to the screen after starting the app.
      * @return
      */
     public static String printHeader() {
-        return System.lineSeparator() + "--- " + Strings.APP_NAME  + ", v" + Strings.APP_VERSION + " ---" + System.lineSeparator();
+        return System.lineSeparator() + "--- " + Strings.APP_NAME  + " v" + Strings.APP_VERSION + " ---" + System.lineSeparator();
     }
 
     /***
@@ -31,31 +42,32 @@ public class CLI {
      * Interactive CLI Mode
      */
     public static void interactiveMode() {
+        Boolean inMenu = true;
         Scanner sc = new Scanner(System.in);
         String tmp;
 
         printMenu();
         tmp = sc.nextLine();
 
-        switch (Integer.valueOf(tmp)) {
-            case 1:
-                //asdf
-                break;
-            case 2:
-                //asdf
-                break;
-            case 3:
-                //asdf
-                break;
-            case 4:
-                //asdf
-                break;
-            case 99:
-                System.out.println(System.lineSeparator() + "Goodbye!");
-                break; // Do we need to use System.exit(0) here?
-            default:
-                System.out.println("Please select one of the uncompleted options.");
-                break;
+        while (inMenu) {
+            switch (Integer.valueOf(tmp)) {
+                case MENU_NUM_NUMOSU:
+                    // toggle single and multiple OSU mode
+                    break;
+                case MENU_NUM_OSUPATH:
+                    // set osu path and add to MENU_STR_OSUPATH
+                    break;
+                case MENU_NUM_PROCESS:
+                    // process changes desired.
+                    break;
+                case MENU_NUM_EXIT:
+                    System.out.println(System.lineSeparator() + "Goodbye!");
+                    inMenu = false;
+                    break; // Do we need to use System.exit(0) here?
+                default:
+                    System.out.println("Please select one of the uncompleted options.");
+                    break;
+            }
         }
     }
 
@@ -65,11 +77,11 @@ public class CLI {
     private static void printMenu() {
         clearScreen();
         System.out.println(printHeader());
-        System.out.println("1. Single / Multiple OSUs.");
-        System.out.println("2. Path to OSU(s):");
-        System.out.println("3. ** OTHER OPTIONS.");
-        System.out.println("4. Process OSU changes.");
-        System.out.println("99. Exit.");
+        System.out.println(MENU_STR_NUMOSU);
+        System.out.println(MENU_STR_OSUPATH);
+        System.out.println(MENU_STR_OTHER);
+        System.out.println(MENU_STR_PROCESS);
+        System.out.println(MENU_STR_EXIT);
         System.out.println(System.lineSeparator());
         System.out.print("Enter #: ");
     }

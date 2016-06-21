@@ -30,7 +30,7 @@ public class CLITest {
 
     @Test
     public void printHeader() throws Exception {
-        String expect = System.lineSeparator() + "--- Beatmap Editor, v" + Strings.APP_VERSION + " ---" + System.lineSeparator();
+        String expect = System.lineSeparator() + "--- Beatmap Editor v" + Strings.APP_VERSION + " ---" + System.lineSeparator();
 
         System.out.print(CLI.printHeader());
 

@@ -49,9 +49,25 @@ public class CLITest {
 
         System.out.print(CLI.printHelp());
 
-        Assert.assertEquals("Actual/Expected Help output doesn't match.", expect, outContent.toString());
+        assertEquals("Actual/Expected Help output doesn't match.", expect, outContent.toString());
 
         assertEquals("Actual/Expected Help strings don't match.", expect, CLI.printHelp());
     }
+
+    @Test
+    public void printCredits() throws Exception {
+        String expect = "Idea/Graphics: Alex Hornish" + System.lineSeparator()
+                + "Code Impl/Jenkins: Shayne Keller";
+
+        System.out.print(CLI.printCredits());
+
+        assertEquals("Actual/Expected Credits string do not match", expect, CLI.printCredits());
+        assertEquals("Actual/Expected Credits output do not match.", expect, outContent.toString());
+    }
+
+    /*@Test // TODO: Figure out if/how to test the method.
+    public void interactiveMode() throws Exception {
+
+    }*/
 
 }

@@ -82,11 +82,12 @@ public class CLI {
                     printWIP();
                     break;
                 case MENU_NUM_OSUNAME:
-                    // set osuname option
-                    printWIP();
+                    System.out.print("Please enter name of OSU file to open: ");
+                    options.put("OSUNAME", sc.nextLine());
+                    //printWIP();
                     break;
                 case MENU_NUM_PROCESS:
-                    // process changes desired.
+                    // process changes desired, but make sure required info has been given first.
                     printWIP();
                     break;
                 case MENU_NUM_EXIT:
@@ -132,6 +133,11 @@ public class CLI {
         }
 
         // OSUNAME
+        if (!options.get("OSUNAME").isEmpty() && !options.get("OSUNAME").toLowerCase().endsWith(".osu")) {
+            options.put("OSUNAME", options.get("OSUNAME") + ".osu");
+        } else if (options.get("NUMOSU").equals("single") && options.get("OSUNAME").equals("*.osu")) {
+            options.put("OSUNAME", "");
+        }
         MENU_STR_OSUNAME = "3. OSU Filename: [" + options.get("OSUNAME") + "]";
     }
 

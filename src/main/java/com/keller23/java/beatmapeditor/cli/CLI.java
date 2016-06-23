@@ -113,7 +113,7 @@ public class CLI {
     /***
      * Fix the Option strings.
      */
-    private static void fixOptions() {
+    private static void fixOptionStrings() {
         // NUMOSU
         if (options.get("NUMOSU").equals("multiple")) {
             MENU_STR_NUMOSU = "1. Single / [Multiple] OSUs.";
@@ -145,7 +145,7 @@ public class CLI {
      * Print interactive menu
      */
     private static void printMenu() {
-        fixOptions();
+        fixOptionStrings();
         clearScreen();
         System.out.println(printHeader());
         System.out.println(MENU_STR_NUMOSU);
@@ -181,5 +181,11 @@ public class CLI {
      */
     private static void printWIP() {
         System.out.println(System.lineSeparator() + "Not implemented quite yet, perhaps poke around elsewhere or exit for now? Sorry!");
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            e.printStackTrace();
+        }
     }
 }

@@ -79,12 +79,15 @@ public class CLI {
                     break;
                 case MENU_NUM_OSUPATH:
                     // set osu path and add to MENU_STR_OSUPATH
+                    printWIP();
                     break;
                 case MENU_NUM_OSUNAME:
                     // set osuname option
+                    printWIP();
                     break;
                 case MENU_NUM_PROCESS:
                     // process changes desired.
+                    printWIP();
                     break;
                 case MENU_NUM_EXIT:
                     System.out.println(System.lineSeparator() + "Goodbye!");
@@ -165,5 +168,12 @@ public class CLI {
         } catch (final Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /***
+     * Temporary helper to print out a WIP message.
+     */
+    private static void printWIP() {
+        System.out.println(System.lineSeparator() + "Not implemented quite yet, perhaps poke around elsewhere or exit for now? Sorry!");
     }
 }

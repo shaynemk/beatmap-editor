@@ -11,6 +11,8 @@ import java.util.Scanner;
  */
 public class CLI {
 
+    private static final int defaultSleep = 2000;
+
     private static final int MENU_NUM_NUMOSU = 1;
     private static final int MENU_NUM_OSUPATH = 2;
     private static final int MENU_NUM_OSUNAME = 3;
@@ -28,10 +30,12 @@ public class CLI {
 
     /***
      * Returns the string to print to the screen after starting the app.
-     * @return Returns string containing the header, including app name and version.
+     * @return Returns string containing the header.
      */
-    public static String printHeader() { // TODO: Figure out how to burn the full version + build into the code at compile.
-        return System.lineSeparator() + "--- " + Strings.APP_NAME  + " v" + Strings.APP_VERSION + " ---" + System.lineSeparator();
+    public static String printHeader() {
+        // TODO: Figure out how to include BUILD_NUMBER at compile.
+        return System.lineSeparator() + "--- " + Strings.APP_NAME  + " v"
+                + Strings.APP_VERSION + " ---" + System.lineSeparator();
     }
 
     /***
@@ -56,47 +60,72 @@ public class CLI {
      * Interactive CLI Mode
      */
     public static void interactiveMode() {
-        // Get things initialized
+        // Get things initialized and ready to go
         Boolean inMenu = true;
         Scanner sc = new Scanner(System.in);
         String tmp;
         initOptions();
 
-        while (inMenu) { // Keep displaying the menu until we want to get out.
+        // Keep displaying the menu until we want to get out.
+        while (inMenu) {
             // Clear screen, print menu, get input, blah blah blah
             printMenu();
             tmp = sc.nextLine();
 
             // figure out what the user entered and wants to do.
-            switch (Integer.valueOf(tmp)) {
-                case MENU_NUM_NUMOSU:
-                    if (options.get("NUMOSU").equals("single")) {
-                        options.put("NUMOSU", "multiple");
-                        options.put("OSUNAME", "*.osu");
-                    } else {
-                        options.put("NUMOSU", "single");
-                    }
-                    break;
-                case MENU_NUM_OSUPATH:
-                    // set osu path and add to MENU_STR_OSUPATH
-                    printWIP();
-                    break;
-                case MENU_NUM_OSUNAME:
-                    System.out.print("Please enter name of OSU file to open: ");
-                    options.put("OSUNAME", sc.nextLine());
-                    //printWIP();
-                    break;
-                case MENU_NUM_PROCESS:
-                    // process changes desired, but make sure required info has been given first.
-                    printWIP();
-                    break;
-                case MENU_NUM_EXIT:
-                    System.out.println(System.lineSeparator() + "Goodbye!");
-                    inMenu = false;
-                    break; // Should we use System.exit(0) here?
-                default:
-                    System.out.println("Please select one of the uncompleted options.");
-                    break;
+            try {
+                switch (Integer.valueOf(tmp)) {
+                    case MENU_NUM_NUMOSU:
+                        if (options.get("NUMOSU").equals("single")) {
+                            printWIP();
+                            //options.put("NUMOSU", "multiple");
+                            //options.put("OSUNAME", "*.osu");
+                        } else {
+                            options.put("NUMOSU", "single");
+                        }
+                        break;
+                    case MENU_NUM_OSUPATH:
+                        // set osu path and add to MENU_STR_OSUPATH
+                        System.out.print("Please enter the path to the OSU(s): ");
+                        options.put("OSUPATH", sc.nextLine());
+                        break;
+                    case MENU_NUM_OSUNAME:
+                        if (options.get("NUMOSU").equals("single")) {
+                            System.out.print("Please enter name of OSU file to open: ");
+                            tmp = sc.nextLine();
+                            if (!tmp.contains("*")) {
+                                options.put("OSUNAME", sc.nextLine());
+                            } else {
+                                System.out.println(System.lineSeparator()
+                                        + "Wildcards are not supported in Single OSU mode.");
+                                sleep();
+                            }
+                        } else {
+                            System.out.println("OSU Name is locked to *.osu "
+                                    + "when in Multiple mode"
+                                    + "so that we grab all OSUs in the (sub)folders.");
+                        }
+                        break;
+                    case MENU_NUM_PROCESS:
+                        // process changes desired, but make sure required info has been given first.
+                        if (!options.get("OSUNAME").isEmpty() || options.get("NUMOSU").equals("multiple")) {
+                            System.out.println("test");
+                        } else {
+                            System.out.println(System.lineSeparator() + "Please enter something for the OSU name.");
+                            sleep();
+                        }
+                        break;
+                    case MENU_NUM_EXIT:
+                        System.out.println(System.lineSeparator() + "Goodbye!");
+                        inMenu = false;
+                        break; // Should we use System.exit(0) here?
+                    default:
+                        System.out.println("Please select one of the uncompleted options.");
+                        break;
+                }
+            } catch (NumberFormatException e) {
+                System.out.println(System.lineSeparator()
+                        + "Please enter a number corresponding the options listed.");
             }
         }
     }
@@ -108,6 +137,7 @@ public class CLI {
         options.put("NUMOSU", "single");
         options.put("OSUPATH", "./");
         options.put("OSUNAME", "");
+        //options.put("SHOWPROCESS", "false");
     }
 
     /***
@@ -139,6 +169,9 @@ public class CLI {
             options.put("OSUNAME", "");
         }
         MENU_STR_OSUNAME = "3. OSU Filename: [" + options.get("OSUNAME") + "]";
+
+        //PROCESS
+
     }
 
     /***
@@ -151,7 +184,7 @@ public class CLI {
         System.out.println(MENU_STR_NUMOSU);
         System.out.println(MENU_STR_OSUPATH);
         System.out.println(MENU_STR_OSUNAME);
-        System.out.println(MENU_STR_OTHER);
+        //System.out.println(MENU_STR_OTHER);
         System.out.println(MENU_STR_PROCESS);
         System.out.println(MENU_STR_EXIT);
         System.out.println(System.lineSeparator());
@@ -177,14 +210,33 @@ public class CLI {
     }
 
     /***
-     * Temporary helper to print out a WIP message.
+     * Helper to print out a WIP message.
      */
     private static void printWIP() {
         System.out.println(System.lineSeparator() + "Not implemented quite yet, perhaps poke around elsewhere or exit for now? Sorry!");
+        sleep();
+    }
+
+    /***
+     * Delay helper function.
+     * @param millis Milliseconds to sleep.
+     */
+    private static void sleep(final long millis) {
         try {
-            Thread.sleep(5000);
+            Thread.sleep(millis);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
+            e.printStackTrace();
+        }
+    }
+
+    /***
+     * Sleep overload to allow for using a default length.
+     */
+    private static void sleep() {
+        try {
+            Thread.sleep(defaultSleep);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

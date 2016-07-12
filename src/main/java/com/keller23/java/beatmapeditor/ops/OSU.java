@@ -28,7 +28,6 @@ public class OSU {
      */
     private Map<String, String> Properties = new HashMap<String, String>();
 
-
     /***
      * OSU object constructor.
      * @param filePath Location of the OSU file.
@@ -63,7 +62,7 @@ public class OSU {
     }
 
     /***
-     * getVersion() returns the Version of the OSU.
+     * getVersion() returns the Version string of the OSU.
      * @return Version Version of the OSU file.
      */
     public final String getVersion() {
@@ -76,6 +75,13 @@ public class OSU {
      */
     public final void setVersion(final String version) {
         //this.Version = Version;
+    }
+
+    /***
+     * Print out the version of OSU.
+     */
+    public final void printVersion() {
+        System.out.println(Version);
     }
 
     /***

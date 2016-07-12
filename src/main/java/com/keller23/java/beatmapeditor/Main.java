@@ -4,6 +4,9 @@ package com.keller23.java.beatmapeditor;
 import com.keller23.java.beatmapeditor.cli.CLI;
 import com.keller23.java.beatmapeditor.ops.FileOps;
 
+/***
+ * Main Entry point
+ */
 public class Main {
 
     /***
@@ -12,28 +15,40 @@ public class Main {
      */
     public static void main(final String[] args) {
 
-        System.out.println(CLI.printHeader());
+        //System.out.println(CLI.getHeader());
+        CLI.printHeader();
 
-        if (args.length > 1) switch (args[0]) {
+        if (args.length > 0) switch (args[0]) {
+            case "--credits":
+                CLI.printCredits();
+                break;
             case "--read":
-                if (!args[1].isEmpty()) {
+                if (args.length > 1 && !args[1].isEmpty()) {
                     FileOps.readFile(args[1]);
                 } else {
                     System.out.println("Command needs filename given to read.");
-                    System.out.println(CLI.printHelp());
+                    //System.out.println(CLI.getHelp());
+                    CLI.printHelp();
                 }
                 break;
             case "--readVersion":
                 FileOps.readFileVersion(args[1]);
                 break;
+            case "--auto":
+                System.out.println("Automatic Mode Selected" + System.lineSeparator());
+                CLI.automaticMode(args);
+                break;
+            case "--interactive":
+                CLI.interactiveMode();
+                break;
             default:
                 //System.out.println("First argument is unknown.");
-                System.out.println(CLI.printHelp());
+                //System.out.println(CLI.getHelp());
+                CLI.printHelp();
                 break;
-        } else if (args.length == 1 && args[0].equals("--interactive")) {
-            CLI.interactiveMode();
         } else {
-            System.out.println(CLI.printHelp());
+            //System.out.println(CLI.getHelp());
+            CLI.printHelp();
         }
 
 

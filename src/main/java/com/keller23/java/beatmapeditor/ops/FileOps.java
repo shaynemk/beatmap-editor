@@ -4,13 +4,22 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.TrueFileFilter;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.nio.charset.Charset;
+import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 /***
  * FileOps - Class containing some methods for file operations.
@@ -128,13 +137,18 @@ public class FileOps {
             difficultyOptions = stream
                     .filter(line -> line.startsWith("OverallDifficulty") || line.startsWith("ApproachRate"))
                     .collect(Collectors.toList());
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            //e.printStackTrace();
+            System.out.println(e.getLocalizedMessage().split("\n")[0]); // try to get only first line //FIXME
+            // System.exit(1); // non zero to indicate error.
         }
 
-        System.out.println("\n---- " + filePath.split("\\\\")[filePath.split("\\\\").length - 1] + ":");
-        osuVersion.forEach(System.out::println);
-        difficultyOptions.forEach(System.out::println);
+        //System.out.println("\n---- " + filePath.split("\\\\")[filePath.split("\\\\").length - 1] + ":");
+
+        System.out.println("\n---- Found OSU: " + filePath.split("\\\\")[filePath.split("\\\\").length - 1] + ":");
+
+        //osuVersion.forEach(System.out::println);
+        //difficultyOptions.forEach(System.out::println);
     }
 
     /***
@@ -179,6 +193,134 @@ public class FileOps {
         for (File file : files) {
             //System.out.println("file: " + file.getPath());
             readFileVersion(file.getPath());
+        }
+    }
+
+    /***
+     * Walk path and modify all OSU files.
+     * @param rootDir Directory to walk
+     */
+    public static void walkPath(final String rootDir) {
+        try {
+            Files.walk(Paths.get(rootDir))
+            .filter(f -> f.toFile().isFile() && f.toFile().getAbsolutePath().endsWith(".osu"))
+            .forEach(file -> {
+
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /***
+     * Parses the batchOptions.
+     * @param options Map of batchOptions.
+     * @return true if batch mode is enabled, otherwise false.
+     */
+    private static boolean checkOptions(final Map<String, String> options) {
+        for (String option : options.values()) {
+            if (!option.equals("0")) return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Get all the non empty lines from all the files with the specific extension, recursively.
+     *
+     * @param path      the path to start recursion
+     * @param batchOptions stores batch mode options
+     */
+    public static /*List<String>*/ void readAllLineFromAllFilesRecursively(final String path, final Map<String, String> batchOptions/*, final String extension*/) {
+        final List<String> lines = new ArrayList<>();
+        try (final Stream<Path> pathStream = Files.walk(Paths.get(path), FileVisitOption.FOLLOW_LINKS)) {
+            pathStream
+                    .filter((p) -> !p.toFile().isDirectory() && !p.toFile().getAbsolutePath().endsWith(".tmp.osu") && p.toFile().getAbsolutePath().endsWith(".osu" /*extension*/))
+                    .forEach(p -> fileLinesToList(p, lines, batchOptions));
+        } catch (final IOException e) {
+            //LOG.error(e.getMessage(), e);
+            e.printStackTrace();
+        }
+        //return lines;
+    }
+
+    /***
+     * some other method
+     * @param file the file
+     * @param lines file lines
+     * @param batchOptions map of options for batch mode
+     */
+    private static void fileLinesToList(final Path file, final List<String> lines, final Map<String, String> batchOptions) {
+        System.out.println("--- Processing " + file.toString());
+        final String tFile = file.toFile().getAbsolutePath().substring(0, file.toFile().getAbsolutePath().length() - 4) + ".tmp.osu";
+        //System.out.println(tFile);
+        try (Stream<String> stream = Files.lines(file, Charset.defaultCharset())) {
+            stream
+                    /*.map(String::trim)*/
+                    /*.filter(s -> !s.isEmpty())*/
+                    .forEach(lines::add);
+
+            if (!lines.isEmpty()) { // If is was not an empty file...
+                try {
+                    PrintWriter pw = new PrintWriter(new FileWriter(tFile, false));
+
+                    String tmpLine, tmpInput, tmpOption, newOption;
+                    String[] tSplit;
+                    Scanner sc = new Scanner(System.in);
+                    for (int i = 0; i < lines.size(); i++) {
+                        tmpLine = lines.get(i);
+                        if (tmpLine.contains("HPDrainRate") || tmpLine.contains("CircleSize") || tmpLine.contains("OverallDifficulty") || tmpLine.contains("ApproachRate")) {
+                            if (checkOptions(batchOptions)) {
+                                tSplit = tmpLine.split(":");
+                                tmpOption = batchOptions.get(tSplit[0]);
+                                newOption = (Integer.parseInt(tmpOption) > 0) ? tmpOption : tSplit[1];
+                            } else {
+                                System.out.println(System.lineSeparator() + tmpLine);
+                                tSplit = tmpLine.split(":");
+                                System.out.print("Found option '" + tSplit[0] + "'. Enter new setting? [y/N] ");
+                                tmpInput = sc.nextLine();
+                                switch (tmpInput.toLowerCase()) {
+                                    case "y":
+                                        System.out.print(System.lineSeparator() + "Enter new setting: ");
+                                        newOption = sc.nextLine();
+                                        if (Integer.parseInt(newOption) < 1 || Integer.parseInt(newOption) > 10) {
+                                            System.out.println("ERROR: Option is out of bounds. (1 - 10)" + System.lineSeparator()
+                                                    + "Resetting option to original. (" + tSplit[1] + ")");
+                                            newOption = tSplit[1];
+                                        }
+                                        break;
+                                    case "n": // "n" is the default option, so just let it bleed down to default since it will be the same outcome.
+                                    default:
+                                        newOption = tSplit[1];
+                                }
+                            }
+
+                            pw.println(tSplit[0] + ":" + newOption);
+                        } else {
+                            pw.println(tmpLine);
+                        }
+                    }
+
+                    pw.close();
+                    lines.clear();
+                    System.out.println();
+
+                    // Move original to .bak
+                    Files.move(file, file.resolveSibling(file.toFile().getName() + ".bak"), REPLACE_EXISTING);
+
+                    // Move new file into production
+                    Path tmpPath = Paths.get(tFile);
+                    Files.move(tmpPath, tmpPath.resolveSibling(file.toFile().getName()));
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("File (" + file + ") was empty.");
+            }
+        } catch (final Exception e) {
+            //LOG.error(e.getMessage(), e);
+            e.printStackTrace();
         }
     }
 }
